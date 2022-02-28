@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -66,6 +66,12 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.posts.index') }}">Home</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.posts.create') }}">New Post</a>
                             </li>
                         @endguest
                     </ul>
