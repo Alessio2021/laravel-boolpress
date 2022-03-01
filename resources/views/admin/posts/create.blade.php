@@ -29,8 +29,8 @@
           @enderror
         </div>
         <div class="mb-3">
-
-        <input class="btn btn-primary" type="submit" value="Send">
+        <a href="{{ route('admin.posts.index') }}" class="text-light fw-bold btn btn-primary m-1">Back</a>
+        <input class="text-light fw-bold btn btn-primary" type="submit" value="Send">
       </form>
     </div>
   </div>

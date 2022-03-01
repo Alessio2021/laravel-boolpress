@@ -4,7 +4,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col">
-        <form action="{{ route('admin.posts.update', $post) }}" method="post">
+        <form action="{{ route('admin.posts.update', $post->slug) }}" method="post">
         @csrf
         @method('PATCH')
         <div class="mb-3">
@@ -29,8 +29,8 @@
           @enderror
         </div>
         <div class="mb-3">
-
-        <input class="btn btn-primary" type="submit" value="Send">
+        <a href="{{ route('admin.posts.index')}}" class="text-white fw-bold btn btn-primary m-1">Back</a>
+        <input class="text-white fw-bold btn btn-primary" type="submit" value="Send">
       </form>
     </div>
   </div>

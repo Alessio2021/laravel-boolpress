@@ -72,7 +72,7 @@ class PostController extends Controller
         $newPost->slug = $slug;
         $newPost->save();
 
-        return redirect()->route('admin.posts.show', ['post' => $newPost]);
+        return redirect()->route('admin.posts.show', $newPost->slug);
     }
 
     /**
@@ -116,7 +116,7 @@ class PostController extends Controller
         if (!$updated) {
             dd('ritenta, sarai piu fortunato');
         }
-        return redirect()->route('admin.posts.show', $post);
+        return redirect()->route('admin.posts.show', $post)->with('status', "Post id $post->id Saved");
     }
 
     /**
