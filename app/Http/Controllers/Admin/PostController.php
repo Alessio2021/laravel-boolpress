@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -50,6 +51,9 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        // dd($data);
+
 
         $slug = Str::slug($data['title'], '-');
         $postPresente = Post::where('slug', $slug)->first();

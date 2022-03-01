@@ -22,7 +22,7 @@
             @endforeach
         </ul>
         <div>
-            {{$posts->links()}}
+            {{ $posts->links() }}
         </div>
     </div>
 @endsection
