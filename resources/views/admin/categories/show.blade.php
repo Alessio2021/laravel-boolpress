@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @dd($category->posts()->get());
+                    {{-- @dd($category->posts()->get()); --}}
                     @foreach ($category->posts()->get() as $post)
                         <tr>
                             <td>{{ $post->id }}</td>
