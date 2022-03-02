@@ -76,6 +76,9 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('admin.posts.indexUser') }}">My Posts</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.categories.index') }}">Categories</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
