@@ -7,6 +7,7 @@ use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Category;
 
 class PostController extends Controller
 {
@@ -23,8 +24,21 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('updated_at', 'desc')->paginate(15);
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', ['posts' => $posts]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.posts.index', ['posts' => $posts]);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +47,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -48,28 +63,17 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'author' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'exists:App\Model\Category,id'
         ]);
 
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         // dd($data);
 
-
-        $slug = Str::slug($data['title'], '-');
-        $postPresente = Post::where('slug', $slug)->first();
-
-
-        $counter = 0;
-        while ($postPresente) {
-            $slug = $slug . '-' . $counter;
-            $postPresente = Post::where('slug', $slug)->first();
-            $counter++;
-        }
-
         $newPost = new Post();
 
         $newPost->fill($data);
-        $newPost->slug = $slug;
+        $newPost->slug = $newPost->createSlug($data['title']);
         $newPost->save();
 
         return redirect()->route('admin.posts.show', $newPost->slug);
@@ -95,7 +99,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', ['post' => $post]);
+        $categories = Category::all();
+        return view('admin.posts.edit', ['post' => $post], ['categories' => $categories]);
     }
 
     /**

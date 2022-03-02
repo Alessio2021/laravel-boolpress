@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -11,7 +12,8 @@ class Post extends Model
         'author',
         'content',
         'slug',
-        'user_id'
+        'user_id',
+        'category_id'
     ];
 
     public function user()
@@ -19,9 +21,30 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Model\Category');
+    }
+
     public function getRouteKeyName()
-        {
-            return 'slug';
+    {
+        return 'slug';
+    }
+
+    public function createSlug($title)
+    {
+        $slug = Str::slug($title, '-');
+
+        $oldPost = Post::where('slug', $slug)->first();
+
+        $counter = 0;
+        while ($oldPost) {
+            $newSlug = $slug . '-' . $counter;
+            $oldPost = Post::where('slug', $newSlug)->first();
+            $counter++;
         }
+
+        return (empty($newSlug)) ? $slug : $newSlug;
+    }
     
 }

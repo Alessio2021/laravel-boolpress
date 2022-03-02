@@ -11,15 +11,24 @@
                             <h4>{{ $post->author }}</h4>
                             <p>{{ $post->content }}</p>
                             <h6>{{ $post->slug }}</h6>
+                            <h6>{{ $post->category()->first()->name }}</h6>
+
                         </div>
                         <div class="col-1">
                             <a href="{{ route('admin.posts.show', $post->slug) }}" class="mt-1 w-100 btn btn-success">View</a>
-                            <a href="{{ route('admin.posts.edit', $post->slug) }}" class="mt-1 w-100 btn btn-success">Modify</a>
-                            <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="post">
+
+                            @if (Auth::user()->id === $post->user_id)
+                                <a href="{{ route('admin.posts.edit', $post->slug) }}" class="mt-1 w-100 btn btn-success">Modify</a>
+                            @endif
+                                
+                            @if (Auth::user()->id === $post->user_id)
+                                <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input class="mt-1 w-100 btn btn-danger" type="submit" value="Delete">
-                            </form>
+                                </form>
+                            @endif
+
                         </div>
                     </div>
                 </li>
