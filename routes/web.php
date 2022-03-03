@@ -27,9 +27,8 @@ Route::middleware('auth')
     ->group(function() {
         Route::get('/', 'HomeController@index')->name('home');
         Route::get('/myposts', 'PostController@indexUser')->name('posts.indexUser');
-        Route::get('/categories', 'CategoryController@index')->name('categories.index');
-        Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
-
-
+        // Route::get('/categories', 'CategoryController@index')->name('categories.index');
+        // Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
         Route::resource('posts', 'PostController');
+        Route::resource('categories', 'CategoryController');
     });

@@ -12,6 +12,12 @@
                             <p>{{ $category->created_at }}</p>
                             <h6>{{ $category->update_at }}</h6>
                             <a class="btn btn-primary" href="{{ route('admin.categories.show', $category->slug) }}">View</a>
+                            <form class="mt-1" action="{{ route('admin.categories.destroy', $category->slug) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
                         </div>
                     </div>
                 </li>
