@@ -7,11 +7,16 @@
                 <li class="mt-5 mb-3 list-group-item shadow-lg">
                     <div class="row">
                         <div class="col-11">
-                            <h2>{{ $post->title }}</h2>
-                            <h4>{{ $post->author }}</h4>
-                            <p>{{ $post->content }}</p>
-                            <h6>{{ $post->slug }}</h6>
-                            <h6>{{ $post->category()->first()->name }}</h6>
+                            <h2>Title: {{ $post->title }}</h2>
+                            <h4>Author: {{ $post->author }}</h4>
+                            <p>Content: {{ $post->content }}</p>
+                            <h6>Slug: {{ $post->slug }}</h6>
+                            <h6>Category: {{ $post->category()->first()->name }}</h6>
+                            <h6>Tags:   
+                                @foreach ($post->tags()->get() as $tag)
+                                {{ $tag->name }}
+                                @endforeach
+                            </h6>
 
                         </div>
                         <div class="col-1">

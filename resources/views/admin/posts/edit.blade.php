@@ -8,6 +8,7 @@
         @csrf
         @method('PATCH')
 
+            {{-- select --}}
           <div class="mb-3">
             <select class="form-select" name="category_id">
                 
@@ -23,6 +24,35 @@
                 {{ $message }}
             </div>
           @enderror
+
+            {{-- CHECKBOX --}}
+            
+            <fieldset class="mb-3">
+                <legend>Tags</legend>
+                {{-- se abbiamo gia compilato il form e siamo tornati indietro per validazione errata allora facciamo un foreach e controlliamo old('tags') --}}
+                @if ($errors->any())
+                    @foreach ($tags as $tag)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                @else
+                    {{-- Altrimenti prendiamo i dati dal db e checchiamo i nostri checkbox corrispondenti --}}
+                    @foreach ($tags as $tag)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                {{ $post->tags()->get()->contains($tag->id)? 'checked': '' }}>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                @endif
+            </fieldset>
 
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
