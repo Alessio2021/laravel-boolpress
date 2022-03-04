@@ -75,6 +75,7 @@
         <div class="mb-3">
         <a href="{{ route('admin.posts.index')}}" class="text-white fw-bold btn btn-primary m-1">Back</a>
         <input class="text-white fw-bold btn btn-primary" type="submit" value="Send">
+        </div>
       </form>
     </div>
   </div>

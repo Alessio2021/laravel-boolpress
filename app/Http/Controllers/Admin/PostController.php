@@ -14,9 +14,9 @@ class PostController extends Controller
 {
     protected $validator = [
         'title' => 'required|max:255',
-        'author' => 'required|max:255',
-        'content' => 'required|max:255',
-
+        'content' => 'required',
+        'category_id' => 'exists:App\Model\Category,id',
+        'tags.*' => 'nullable|exists:App\Model\Tag,id'
     ];
 
     /**
@@ -126,11 +126,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        
-        
         $data = $request->all();
-        $request->validate($this->validator);
-        dd($this->validator);
+
+        $validator = $request->validate(
+            [
+                'title' => 'required|max:255',
+                'content' => 'required',
+                'category_id' => 'exists:App\Model\Category,id',
+                'tags.*' => 'nullable|exists:App\Model\Tag,id'
+            ]
+        );
         $updated = $post->update($data);
 
         if (!$updated) {
