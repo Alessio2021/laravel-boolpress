@@ -4,7 +4,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col">
-        <form action="{{ route('admin.posts.update', $post->slug) }}" method="post">
+        <form action="{{ route('admin.posts.update', $post) }}" method="post">
         @csrf
         @method('PATCH')
 
@@ -26,7 +26,7 @@
           @enderror
 
             {{-- CHECKBOX --}}
-            
+
             <fieldset class="mb-3">
                 <legend>Tags</legend>
                 {{-- se abbiamo gia compilato il form e siamo tornati indietro per validazione errata allora facciamo un foreach e controlliamo old('tags') --}}

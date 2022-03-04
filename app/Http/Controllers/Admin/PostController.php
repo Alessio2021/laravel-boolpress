@@ -15,8 +15,10 @@ class PostController extends Controller
     protected $validator = [
         'title' => 'required|max:255',
         'author' => 'required|max:255',
-        'content' => 'required|max:255'
+        'content' => 'required|max:255',
+
     ];
+
     /**
      * Display a listing of the resource.
      *
@@ -61,16 +63,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'category_id' => 'exists:App\Model\Category,id',
-            'tags.*' => 'nullable|exists:App\Model\Tag,id'
-        ]);
-
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
         $data['author'] = Auth::user()->name;
+
+        $validator = $request->validate(
+            [
+                'title' => 'required|max:255',
+                'content' => 'required',
+                'category_id' => 'exists:App\Model\Category,id',
+                'tags.*' => 'nullable|exists:App\Model\Tag,id'
+            ]
+        );
+
+
         // dd($data);
 
         $newPost = new Post();
@@ -120,10 +126,11 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $request->validate($this->validator);
-
-
+        
+        
         $data = $request->all();
+        $request->validate($this->validator);
+        dd($this->validator);
         $updated = $post->update($data);
 
         if (!$updated) {
@@ -136,7 +143,7 @@ class PostController extends Controller
             $post->tags()->detach();
         }
 
-        return redirect()->route('admin.posts.show', $post)->with('status', "Post id $post->id Saved");
+        return redirect()->route('admin.posts.show', ['post' => $post]);
     }
 
     /**
