@@ -7,6 +7,7 @@
                 <li class="mt-5 mb-3 list-group-item shadow-lg">
                     <div class="row">
                         <div class="col-11">
+                            <img class="w-50" src="{{asset('storage/' . $post->image)}}" alt="{{$post->title}}">
                             <h2>Title: {{ $post->title }}</h2>
                             <h4>Author: {{ $post->author }}</h4>
                             <p>Content: {{ $post->content }}</p>

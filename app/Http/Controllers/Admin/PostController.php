@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
 use App\Model\Tag;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -16,7 +18,8 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'exists:App\Model\Category,id',
-        'tags.*' => 'nullable|exists:App\Model\Tag,id'
+        'tags.*' => 'nullable|exists:App\Model\Tag,id',
+        'image' => 'nullable|image'
     ];
 
     /**
@@ -72,10 +75,15 @@ class PostController extends Controller
                 'title' => 'required|max:255',
                 'content' => 'required',
                 'category_id' => 'exists:App\Model\Category,id',
-                'tags.*' => 'nullable|exists:App\Model\Tag,id'
+                'tags.*' => 'nullable|exists:App\Model\Tag,id',
+                'image' => 'nullable|image'
             ]
         );
 
+        if (!empty($data['image'])) {
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
 
         // dd($data);
 
@@ -88,6 +96,7 @@ class PostController extends Controller
         if (!empty($data['tags'])) {
             $newPost->tags()->attach($data['tags']);
         }
+
 
         return redirect()->route('admin.posts.show', $newPost);
     }
@@ -133,9 +142,18 @@ class PostController extends Controller
                 'title' => 'required|max:255',
                 'content' => 'required',
                 'category_id' => 'exists:App\Model\Category,id',
-                'tags.*' => 'nullable|exists:App\Model\Tag,id'
+                'tags.*' => 'nullable|exists:App\Model\Tag,id',
+                'image' => 'nullable|image'
             ]
         );
+
+        if (!empty($data['image'])) {
+            Storage::delete($post->image);
+
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
+
         $updated = $post->update($data);
 
         if (!$updated) {
@@ -147,6 +165,7 @@ class PostController extends Controller
         } else {
             $post->tags()->detach();
         }
+
 
         return redirect()->route('admin.posts.show', ['post' => $post]);
     }

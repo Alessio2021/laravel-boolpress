@@ -4,7 +4,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col">
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
 
@@ -64,8 +64,16 @@
           @enderror
         </div>
         <div class="mb-3">
-        <a href="{{ route('admin.posts.index') }}" class="text-light fw-bold btn btn-primary m-1">Back</a>
-        <input class="text-light fw-bold btn btn-primary" type="submit" value="Send">
+          <label for="image" class="form-label">Seleziona File</label>
+          <input class="form-control" type="file" id="image" name="image">
+          @error('image')
+            <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+        </div>
+        <div class="mb-3">
+          <a href="{{ route('admin.posts.index') }}" class="text-light fw-bold btn btn-primary m-1">Back</a>
+          <input class="text-light fw-bold btn btn-primary" type="submit" value="Send">
+        </div>
       </form>
     </div>
   </div>
