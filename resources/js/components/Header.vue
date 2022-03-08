@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5">
       ciao
   </div>
 </template>
