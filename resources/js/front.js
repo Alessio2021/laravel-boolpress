@@ -8,6 +8,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import App from './views/App';
+import Home from './pages/Home';
+import Post from './pages/Post';
+import Posts from './pages/Posts';
+import Contacts from './pages/Contacts';
+import About from './pages/About';
+
+import VueRouter from 'vue-router';
+import Vue from 'vue';
+Vue.use(VueRouter);
 
 
 /**
@@ -16,7 +25,34 @@ import App from './views/App';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/',
+            name: 'posts',
+            component: Posts
+        },
+        {
+            path: '/',
+            name: 'contacts',
+            component: Contacts
+        },
+        {
+            path: '/',
+            name: 'about',
+            component: About
+        }
+    ]
+})
+
 const app = new Vue({
     el: '#app',
     render: h => h(App),
+    router
 });

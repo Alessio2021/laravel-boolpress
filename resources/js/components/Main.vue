@@ -1,6 +1,4 @@
 <template>
-  <div class="mt-5">
-<template>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div class="col" v-for="(post, index) in posts" :key="index">
@@ -16,25 +14,12 @@
     </div>
   </div>
 </template>
-  </div>
-</template>
+
 
 <script>
-import Axios from 'axios'
-
 export default {
     name: "Main",
-    data() {
-        return {
-            posts: null
-        }
-    },
-    created() {
-        Axios.get('http://127.0.0.1:8000/api/posts').then((results) => {
-                this.posts = results.data.results.posts;
-            }
-        );
-    }
+    props:['posts']
 }
 </script>
 
