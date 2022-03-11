@@ -34,17 +34,17 @@ const router = new VueRouter({
             component: Home
         },
         {
-            path: '/',
+            path: '/posts',
             name: 'posts',
             component: Posts
         },
         {
-            path: '/',
+            path: '/contacts',
             name: 'contacts',
             component: Contacts
         },
         {
-            path: '/',
+            path: '/about',
             name: 'about',
             component: About
         },

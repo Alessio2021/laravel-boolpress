@@ -27,4 +27,6 @@ class PostController extends Controller
             'results' => ['data' => $post],
         ]);
     }
+
+
 }
